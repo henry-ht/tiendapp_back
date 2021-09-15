@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->enum('size', ['S', 'M', 'L'])->default("S");
-            $table->integer('inventory');
+            $table->integer('existence');
             $table->date('boarding');
             $table->unsignedBigInteger('brand_id');
             $table->boolean('disabled')->default(false);
