@@ -138,6 +138,7 @@ class BrandController extends Controller
 
         $credentials = $request->only([
             'name',
+            'description',
             'disabled',
         ]);
 
