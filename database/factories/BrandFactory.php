@@ -23,6 +23,7 @@ class BrandFactory extends Factory
     {
         return [
             'name'          => $this->faker->unique()->colorName(),
+            'reference'     => $this->faker->unique()->buildingNumber(),
             'description'   => $this->faker->paragraph(2, false),
         ];
     }

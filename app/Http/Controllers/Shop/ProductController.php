@@ -152,7 +152,7 @@ class ProductController extends Controller
         ]);
 
         $validation = Validator::make($credentials,[
-            'name'          => 'sometimes|required|max:150|min:3|string|unique:brands,name,'.$product->id,
+            'name'          => 'sometimes|required|max:150|min:3|string|unique:products,name,'.$product->id,
             'existence'     => 'sometimes|required|integer',
             'size'          => 'sometimes|required|in:S,L,M',
             'boarding'      => 'sometimes|required|date',

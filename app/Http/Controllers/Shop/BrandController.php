@@ -17,11 +17,13 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $credentials = $request->only([
-            'search'
+            'search',
+            'total'
         ]);
 
         $validation = Validator::make($credentials,[
-            'search'    => 'sometimes|required|min:2|max:20'
+            'search'    => 'sometimes|required|min:2|max:20',
+            'total'     => 'sometimes|required|integer'
         ]);
 
         if (!$validation->fails()) {
@@ -34,9 +36,15 @@ class BrandController extends Controller
                 ->orWhere('name', 'LIKE', $search);
             }
 
+            if (isset($credentials['total'])) {
+                $response = $response->paginate($credentials['total']);
+            }else{
+                $response = $response->get();
+            }
+
             $message    = ['message' => [__('list'), ]];
             $status     = 'success';
-            $data       = $response->paginate(10);
+            $data       = $response;
 
         }else{
             $message    = $validation->messages();
@@ -67,11 +75,13 @@ class BrandController extends Controller
 
         $credentials = $request->only([
             'name',
+            'reference',
             'description',
         ]);
 
         $validation = Validator::make($credentials,[
             'name'              => 'required|max:150|min:3|string|unique:brands,name',
+            'reference'         => 'required|max:150|min:3|string|unique:brands,reference',
             'description'       => 'sometimes|required|max:150|min:3|string',
         ]);
 
@@ -139,12 +149,14 @@ class BrandController extends Controller
         $credentials = $request->only([
             'name',
             'description',
+            'reference',
             'disabled',
         ]);
 
         $validation = Validator::make($credentials,[
             'name'          => 'sometimes|required|max:150|min:3|string|unique:brands,name,'.$brand->id,
             'description'   => 'sometimes|required|max:150|min:3|string',
+            'reference'     => 'sometimes|required|max:150|min:3|string|unique:brands,reference,'.$brand->id,
             'disabled'      => 'sometimes|required|boolean',
         ]);
 
