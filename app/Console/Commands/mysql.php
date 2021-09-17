@@ -13,7 +13,7 @@ class mysql extends Command
      *
      * @var string
      */
-    protected $signature = 'mysql:create {name?}';
+    protected $signature = 'db:create {name?}';
 
     /**
      * The console command description.
