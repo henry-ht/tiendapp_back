@@ -78,7 +78,7 @@ class ProductController extends Controller
 
         $validation = Validator::make($credentials,[
             'name'          => 'required|max:150|min:3|string|unique:products,name',
-            'size'          => 'required|in:S,L,M',
+            'size'          => 'required|string|in:S,L,M',
             'existence'     => 'required|integer',
             'boarding'      => 'required|date',
             'brand_id'      => 'required|integer|exists:brands,id',
@@ -148,13 +148,18 @@ class ProductController extends Controller
 
         $credentials = $request->only([
             'name',
+            'existence',
+            'size',
+            'boarding',
+            'brand_id',
+            'description',
             'disabled',
         ]);
 
         $validation = Validator::make($credentials,[
             'name'          => 'sometimes|required|max:150|min:3|string|unique:products,name,'.$product->id,
             'existence'     => 'sometimes|required|integer',
-            'size'          => 'sometimes|required|in:S,L,M',
+            'size'          => 'sometimes|required|string|in:S,L,M',
             'boarding'      => 'sometimes|required|date',
             'brand_id'      => 'sometimes|required|integer|exists:brands,id',
             'description'   => 'sometimes|required|max:150|min:3|string',
